@@ -1,19 +1,4 @@
-import { useState, useEffect } from "react";
-
-export default function Launches() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const fetchLaunches = async () => {
-      const res = await fetch("https://api.spacexdata.com/v3/launches");
-      const data = await res.json();
-
-      setData(data);
-    };
-
-    fetchLaunches();
-  }, []);
-
+export default function Launches({ data }) {
   if (data === null) {
     return null;
   }
@@ -25,4 +10,15 @@ export default function Launches() {
       })}
     </ol>
   );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch("https://api.spacexdata.com/v3/launches");
+  const data = await res.json();
+
+  return {
+    props: {
+      data,
+    }, // will be passed to the page component as props
+  };
 }
