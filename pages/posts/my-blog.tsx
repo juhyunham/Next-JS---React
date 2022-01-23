@@ -3,7 +3,18 @@ import Head from "next/head";
 import Image from "next/image";
 import Layout from "../../components/layout";
 
-export default function MyBlog() {
+import { getSortedPostsData } from "../../lib/posts";
+
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+}
+
+export default function MyBlog({ allPostsData }) {
   return (
     <Layout>
       <Head>
@@ -22,6 +33,20 @@ export default function MyBlog() {
       />
       <h1>ham_햄</h1>
       <p>I love React. I love Next js</p>
+      <section>
+        <h2>Blog</h2>
+        <ul>
+          {allPostsData.map(({ id, date, title }) => (
+            <li key={id}>
+              {title}
+              <br />
+              {id}
+              <br />
+              {date}
+            </li>
+          ))}
+        </ul>
+      </section>
     </Layout>
   );
 }
