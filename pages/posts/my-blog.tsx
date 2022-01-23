@@ -38,9 +38,9 @@ export default function MyBlog({ allPostsData }) {
         <ul>
           {allPostsData.map(({ id, date, title }) => (
             <li key={id}>
-              {title}
-              <br />
-              {id}
+              <Link href={`/posts/${id}`}>
+                <a>{title}</a>
+              </Link>
               <br />
               {date}
             </li>
